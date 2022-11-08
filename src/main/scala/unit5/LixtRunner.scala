@@ -35,8 +35,28 @@ object LixtRunner {
     println("For comprehension triples: " + triplesForComprehensions(Lixt(1,2,3)))
 
     println(Lixt(1,2))
-    println(Lixt(1.0,2))
+    println(Lixt(1,2.0))
     println(Lixt.empty[Int])
+    //println(Lixt(1.0, 2, 3, 4, 5).toString)
+
+    println("")
+    println(Lixt(1, 2, 3).headOption)
+    println(Lixt().headOption)
+    println(Lixt(1,2,3).apply(2)) // throws IooBException if n >= length
+    println("dropping 2 elements: " + Lixt(1,2,3,4,5).drop(2))
+    println(Lixt(1,2,3,4,5).drop(6))
+    println("finding 3: " + Lixt(1,2,3,4,5).find(_ > 2))
+
+    println("taking 2 elements: " + Lixt(1,2,3,4,5).take(2))
+
+    println("dropWhile < 2: " + Lixt(0, 1, 2).dropWhile(_ < 2))
+    println("takeWhile on List < 2: " + List(0, 1, 2).dropWhile(_ < 2))
+
+    println("takeWhile < 2: " + Lixt(0, 1, 2).takeWhile(_ > 2))
+    println("takeWhile on List < 2: " + List(0, 1, 2).takeWhile(_ > 2))
+
+    println("filtering elements: " + Lixt(1,1,2,3,4,1,4).filter(_ > 6))
+    println("filteringNot elements: " + Lixt(1,1,2,3,4,1,4).filterNot(_ > 2))
   }
 
   //  export Lixt.*

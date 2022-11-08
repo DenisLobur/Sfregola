@@ -6,7 +6,6 @@ enum Lixt[+A]:
   case Nil
   @targetName("cons") case ::(hd: A, tl: Lixt[A])
 
-
   def head: A =
     this match
       case Nil => throw new NoSuchElementException
@@ -64,6 +63,63 @@ enum Lixt[+A]:
     this match
       case Nil => Nil
       case head :: tail => f(head) ::: tail.flatMap(f)
+
+  def headOption: Option[A] =
+    this match
+      case Nil => None
+      case head :: _ => Some(head)
+
+  def length: Int =
+    this match
+      case Nil => 0
+      case _ :: tail => 1 + tail.length
+
+  def apply(n: Int): A =
+    if (n < 0 || n >= this.length) throw IndexOutOfBoundsException(s"No element at index $n")
+    val dropped = this.drop(n)
+    dropped.head
+
+
+  def isEmpty: Boolean =
+    this == Lixt.Nil
+
+  def drop(n: Int): Lixt[A] =
+    if n <= 0 || isEmpty
+    then this
+    else tail.drop(n - 1)
+
+  def take(n: Int): Lixt[A] =
+    if (n <= 0 || isEmpty) then Nil
+    else this match
+      case Nil => Nil
+      case _ :: Nil => this
+      case head :: tail => head :: tail.take(n - 1)
+
+  def dropWhile(p: A => Boolean): Lixt[A] =
+    this match
+      case Nil => Nil
+      case head :: tail => if (p(head)) tail.dropWhile(p) else head :: tail
+
+  def takeWhile(p: A => Boolean): Lixt[A] =
+    this match
+      case Nil => Nil
+      case head :: tail => if (p(head)) head :: tail.takeWhile(p) else Nil
+
+  def find(p: A => Boolean): Option[A] =
+    this match
+      case Nil => None
+      case head :: tail => if (p(head)) Some(head) else tail.find(p)
+
+  def filter(p: A => Boolean): Lixt[A] =
+    this match
+      case Nil => Nil
+      case head :: tail => if (p(head)) head :: tail.filter(p) else tail.filter(p)
+
+  def filterNot(p: A => Boolean): Lixt[A] =
+    this match
+      case Nil => Nil
+      case head :: tail => if (!p(head)) head :: tail.filterNot(p) else tail.filterNot(p)
+
 
 object Lixt:
 
