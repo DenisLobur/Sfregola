@@ -1,6 +1,7 @@
 package unit5
 
 import scala.annotation.targetName
+import scala.collection.mutable
 
 enum Lixt[+A]:
   case Nil
@@ -120,6 +121,18 @@ enum Lixt[+A]:
       case Nil => Nil
       case head :: tail => if (!p(head)) head :: tail.filterNot(p) else tail.filterNot(p)
 
+//TODO: finish with distinct
+//  def distinct: Lixt[A] =
+//    this match
+//      case Nil => Nil
+//      case head :: tail =>
+//        val lixt = Lixt[A]()
+//        if(!lixt.contains(head)) {
+//          cache.add(head)
+//        } else {
+//          tail.distinct
+//        }
+//        cache.head :: cache.tail
 
 object Lixt:
 
